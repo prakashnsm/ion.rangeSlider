@@ -26,8 +26,8 @@
             "url": "http://ionden.com/a/plugins/licence-en.html"
         }
     ],
-    "homepage": "https://github.com/IonDen/ion.rangeSlider",
-    "docs": "https://github.com/IonDen/ion.rangeSlider/blob/master/readme.md",
+    "homepage": "https://github.com/prakashnsm/ion.rangeSlider",
+    "docs": "https://github.com/prakashnsm/ion.rangeSlider/blob/master/readme.md",
     "demo": "http://ionden.com/a/plugins/ion.rangeSlider/en.html",
     "download": "http://ionden.com/a/plugins/ion.rangeSlider/ion.rangeSlider-1.8.2.zip",
     "dependencies": {
