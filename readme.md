@@ -97,6 +97,26 @@ $("#someID").ionRangeSlider();
             <td>Optional property, set postfix text to all values. For example: " pounds" will convert "100" in to "100 pounds"</td>
         </tr>
         <tr>
+            <td>renderAsDate</td>
+            <td>false</td>
+            <td>Optional property, set renderAsDate as true to show all values as Date Vlaue. For example: "0" will convert current date </td>
+        </tr>
+        <tr>
+            <td>renderDate</td>
+            <td>null</td>
+            <td>Optional property, set renderDate as default date object, else otherwise choosen current date</td>
+        </tr>
+        <tr>
+            <td>renderDateFormat</td>
+            <td>'dd/mm/yy'</td>
+            <td>Optional property, set renderDateFormat string to show all date values are shown in which format</td>
+        </tr>
+        <tr>
+            <td>dateReduceBy</td>
+            <td>0</td>
+            <td>Optional property, set dateReduceBy in numeric value, that has to reduce no of days from what u have give in 'renderDate' options </td>
+        </tr>
+        <tr>
             <td>hasGrid</td>
             <td>false</td>
             <td>Optional property, enables grid at the bottom of the slider (it adds 20px height and this can be customised through CSS)</td>

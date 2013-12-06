@@ -67,6 +67,10 @@
                     step: 1,
                     prefix: "",
                     postfix: "",
+					renderAsDate : false,
+					renderDate : null,
+					renderDateFormat : 'dd/mm/yy',
+					dateReduceBy : 0,
                     hasGrid: false,
                     hideMinMax: false,
                     hideFromTo: false,
@@ -262,8 +266,11 @@
                         $fieldSingle[0].style.display = "none";
                     }
                     if (!settings.hideMinMax) {
-                        $fieldMin.html(settings.prefix + prettify(settings.min) + settings.postfix);
-                        $fieldMax.html(settings.prefix + prettify(settings.max) + settings.postfix);
+						var minVal = settings.prefix + prettify(settings.min) + settings.postfix;
+						var maxVal = settings.prefix + prettify(settings.max) + settings.postfix;
+
+                        $fieldMin.html(renderAsDateValues(minVal));
+                        $fieldMax.html(renderAsDateValues(maxVal));
 
                         fieldMinWidth = $fieldMin.outerWidth();
                         fieldMaxWidth = $fieldMax.outerWidth();
@@ -423,6 +430,32 @@
                         setGrid();
                     }
                 };
+				var adjustLeftOnDateValues = function(value , onPosition){
+					
+					return value - 25 ; 
+				}
+				var renderAsDateValues = function(value){
+					var dateValStr = value;
+						if (settings.renderAsDate) {
+							if($.datepicker){
+								dateValStr = $.datepicker.formatDate(settings.renderDateFormat, reduceDateByDay( (settings.renderDate || new Date), (settings.dateReduceBy - value)));
+							}
+							else{
+								console.error('datepicker is not loaded, kindly dependent pulgins need to add "jquery-ui.js" need to load. then only render value as Date will work correctly');
+							}
+						}
+					return dateValStr;
+				}
+				
+				var reduceDateByDay  = function (date , day){
+					var DAYS = day * 24 * 60 * 60 * 1000;
+					return new Date(date-DAYS);
+				}
+				
+				var addDateByDay  = function (date , day){
+					var DAYS = day * 24 * 60 * 60 * 1000;
+					return new Date(date+DAYS);
+				}
 
                 var getSize = function () {
                     normalWidth = $rangeSlider.width();
@@ -607,7 +640,7 @@
                             _single = settings.prefix +
                                 prettify(numbers.fromNumber) +
                                 settings.postfix;
-                            $fieldSingle.html(_single);
+                            $fieldSingle.html(renderAsDateValues(_single));
 
                             _singleW = $fieldSingle.outerWidth();
                             _singleX = numbers.fromX - (_singleW / 2) + _slW;
@@ -647,20 +680,20 @@
                                 settings.postfix;
 
                             if (numbers.fromNumber !== numbers.toNumber) {
-                                _single = settings.prefix +
-                                    prettify(numbers.fromNumber) +
-                                    " — " + settings.prefix +
+                                _single = renderAsDateValues(settings.prefix +
+                                    prettify(numbers.fromNumber)) +
+                                    " — " + renderAsDateValues(settings.prefix +
                                     prettify(numbers.toNumber) +
-                                    settings.postfix;
+                                    settings.postfix);
                             } else {
-                                _single = settings.prefix +
+                                _single = renderAsDateValues(settings.prefix +
                                     prettify(numbers.fromNumber) +
-                                    settings.postfix;
+                                    settings.postfix);
                             }
 
-                            $fieldFrom.html(_from);
-                            $fieldTo.html(_to);
-                            $fieldSingle.html(_single);
+                            $fieldFrom.html(renderAsDateValues(_from));
+                            $fieldTo.html(renderAsDateValues(_to));
+                            $fieldSingle.html(_single); /*(renderAsDateValues(_single));*/
 
                             _fromW = $fieldFrom.outerWidth();
                             _fromX = numbers.fromX - (_fromW / 2) + _slW;
@@ -776,13 +809,13 @@
 
                         if (i === 0) {
                             tStep = step;
-                            gridHTML += '<span class="irs-grid-text" style="left: ' + tStep + 'px; text-align: left;">' + text + '</span>';
+                            gridHTML += '<span class="irs-grid-text" style="left: ' + tStep + 'px; text-align: left;">' + renderAsDateValues(text) + '</span>';
                         } else if (i === bigNum) {
                             tStep = step - 100;
-                            gridHTML += '<span class="irs-grid-text" style="left: ' + tStep + 'px; text-align: right;">' + text + '</span>';
+                            gridHTML += '<span class="irs-grid-text" style="left: ' + tStep + 'px; text-align: right;">' + renderAsDateValues(text) + '</span>';
                         } else {
                             tStep = step - 50;
-                            gridHTML += '<span class="irs-grid-text" style="left: ' + tStep + 'px;">' + text + '</span>';
+                            gridHTML += '<span class="irs-grid-text" style="left: ' + tStep + 'px;">' + renderAsDateValues(text) + '</span>';
                         }
                     }
 
